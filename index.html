@@ -121,7 +121,7 @@ function ItemForm({ initial, onSave, onCancel }) {
         </div>
         <div>
           <label style={labelStyle}>Quantity</label>
-          <input style={inputStyle} type="number" min={0} value={form.quantity} onChange={e => set("quantity", Math.max(0, +e.target.value))} />
+          <input style={inputStyle} type="text" inputMode="numeric" value={form.quantity} onChange={e => { const v = e.target.value.replace(/\D/g, ''); set("quantity", v === '' ? 0 : parseInt(v, 10)); }} />
         </div>
       </div>
 
@@ -151,8 +151,8 @@ function ItemForm({ initial, onSave, onCancel }) {
             <div style={{ display: "flex", gap: 6 }}>
               <input
                 style={{ ...inputStyle, opacity: form.warnQty === 0 ? 0.4 : 1 }}
-                type="number" min={0} value={form.warnQty}
-                onChange={e => set("warnQty", Math.max(0, +e.target.value))}
+                type="text" inputMode="numeric" value={form.warnQty}
+                onChange={e => { const v = e.target.value.replace(/\D/g, ''); set("warnQty", v === '' ? 0 : parseInt(v, 10)); }}
               />
               <button
                 onClick={() => set("warnQty", 0)}
@@ -202,7 +202,7 @@ function RestockPrompt({ item, onConfirm, onCancel }) {
       </div>
       <div>
         <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", letterSpacing: ".5px", textTransform: "uppercase", marginBottom: 4, display: "block" }}>How many did you buy?</label>
-        <input type="number" min={0} value={qty} onChange={e => setQty(Math.max(0, +e.target.value))}
+        <input type="text" inputMode="numeric" value={qty} onChange={e => { const v = e.target.value.replace(/\D/g, ''); setQty(v === '' ? 0 : parseInt(v, 10)); }}
           style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
       </div>
       <div>
