@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+const { useState, useMemo } = React;
+
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 const FILL_LEVELS = ["Full", "Half", "Low", "Out"];
