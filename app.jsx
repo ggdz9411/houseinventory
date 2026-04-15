@@ -1,4 +1,4 @@
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
 
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -234,11 +234,19 @@ function ItemCard({ item, onEdit, onRestock }) {
 
 // ── Main App ──────────────────────────────────────────────────────────────────
 export default function App() {
-  const [items, setItems]       = useState(defaultItems);
+ const [items, setItems] = useState(() => {
+  try {
+    const saved = localStorage.getItem("casa-items");
+    return saved ? JSON.parse(saved) : defaultItems;
+  } catch { return defaultItems; }
+});
   const [tab, setTab]           = useState("inventory"); // inventory | shopping
   const [catFilter, setCat]     = useState("All");
   const [search, setSearch]     = useState("");
   const [modal, setModal]       = useState(null); // null | { type, payload }
+useEffect(() => {
+  localStorage.setItem("casa-items", JSON.stringify(items));
+}, [items]);
 
   const closeModal = () => setModal(null);
 
