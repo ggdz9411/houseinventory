@@ -234,18 +234,11 @@ function RestockPrompt({ item, onConfirm, onCancel }) {
 // ── Modal wrapper ─────────────────────────────────────────────────────────────
 function Modal({ title, children, onClose }) {
   useEffect(() => {
-    const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      window.scrollTo(0, scrollY);
+    const preventBodyScroll = (e) => {
+      if (!e.target.closest('.modal-sheet')) e.preventDefault();
     };
+    document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+    return () => document.removeEventListener('touchmove', preventBodyScroll);
   }, []);
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.45)", zIndex: 100, display: "flex", alignItems: "flex-end", justifyContent: "center" }} onClick={onClose}>
