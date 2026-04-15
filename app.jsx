@@ -233,7 +233,7 @@ function ItemCard({ item, onEdit, onRestock }) {
 }
 
 // ── Main App ──────────────────────────────────────────────────────────────────
-export default function App() {
+function App() {
  const [items, setItems] = useState(() => {
   try {
     const saved = localStorage.getItem("casa-items");
@@ -402,3 +402,5 @@ useEffect(() => {
     </div>
   );
 }
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
